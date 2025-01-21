@@ -5,74 +5,61 @@
 
 using namespace std;
 
-void registerPatient(PatientLinkedList &patientsLL, int patient_id, const string &name, const string &dob, const string &gender){
-    if (patientsLL.search(patient_id)) {
-        cout << "Patient ID already exists!" << endl;
-    } else {
-        Patient newPatient(patient_id, name, dob, gender);
-        patientsLL.add(newPatient);
-        cout << "Patient registered successfully." << endl;
-    }
-};
+void registerPatient(PatientLinkedList &patientsLL, int patient_id, const string &name, const string &dob, const string &gender) {
+    Patient newPatient(patient_id, name, dob, gender);
+    patientsLL.add(newPatient);
+    cout << "Patient registered successfully." << endl;
+}
 
-void registerDoctor(DoctorLinkedList &doctorsLL, int doctor_id, const string &name, const string &specialization){
-    if (doctorsLL.search(doctor_id)) {
-        cout << "Doctor ID already exists!" << endl;
-    } else {
-        Doctor newDoctor(doctor_id, name, specialization);
-        doctorsLL.add(newDoctor);
-        cout << "Doctor registered successfully." << endl;
-    }
-};
+void registerDoctor(DoctorLinkedList &doctorsLL, int doctor_id, const string &name, const string &specialization) {
+    Doctor newDoctor(doctor_id, name, specialization);
+    doctorsLL.add(newDoctor);
+    cout << "Doctor registered successfully." << endl;
+}
+
 void registerAppointment(AppointmentLinkedList &appointmentsLL, PatientLinkedList &patientsLL, DoctorLinkedList &doctorsLL,
-                         int appointment_id, int patient_id, int doctor_id, const string &appointment_date)
-    {
-        if (appointmentsLL.search(appointment_id)) {
-            cout << "Appointment ID already exists!" << endl;
-            return;
-        }
-        
-        if (!patientsLL.search(patient_id)) {
-            cout << "Patient ID does not exist!" << endl;
-            return;
-        }
-        
-        if (!doctorsLL.search(doctor_id)) {
-            cout << "Doctor ID does not exist!" << endl;
-            return;
-        }
+                         int appointment_id, int patient_id, int doctor_id, const string &appointment_date) {
 
-        Appointment newAppointment(appointment_id, patient_id, doctor_id, appointment_date);
-        appointmentsLL.add(newAppointment);
-        cout << "Appointment registered successfully." << endl;
-    };
+    if (!patientsLL.search(patient_id)) {
+        cout << "Patient ID " << patient_id << " does not exist! Please register the patient first." << endl;
+        return;
+    }
 
-void displayPatients(PatientLinkedList &patientsLL){
+    if (!doctorsLL.search(doctor_id)) {
+        cout << "Doctor ID " << doctor_id << " does not exist! Please register the doctor first." << endl;
+        return;
+    }
+
+    Appointment newAppointment(appointment_id, patient_id, doctor_id, appointment_date);
+    appointmentsLL.add(newAppointment);
+    cout << "Appointment registered successfully." << endl;
+}
+
+void displayPatients(PatientLinkedList &patientsLL) {
     if (patientsLL.isEmpty()) {
         cout << "No patients to display." << endl;
     } else {
         patientsLL.display();
     }
-};
+}
 
-void displayDoctors(DoctorLinkedList &doctorsLL){
+void displayDoctors(DoctorLinkedList &doctorsLL) {
     if (doctorsLL.isEmpty()) {
         cout << "No doctors to display." << endl;
     } else {
         doctorsLL.display();
     }
-};
+}
 
-void displayAppointments(AppointmentLinkedList &appointmentsLL){
+void displayAppointments(AppointmentLinkedList &appointmentsLL) {
     if (appointmentsLL.isEmpty()) {
         cout << "No appointments to display." << endl;
     } else {
         appointmentsLL.display();
     }
-};
+}
 
-int main()
-{
+int main() {
     PatientLinkedList patientsLL;
     DoctorLinkedList doctorsLL;
     AppointmentLinkedList appointmentsLL;
@@ -80,8 +67,7 @@ int main()
     cout << "Welcome to MediScheduler.\n" << endl;
 
     int choice;
-    do
-    {
+    do {
         cout << "\n1. Register Patient" << endl;
         cout << "2. Register Doctor" << endl;
         cout << "3. Register Appointment" << endl;
@@ -92,14 +78,18 @@ int main()
         cout << "Enter choice: ";
         cin >> choice;
 
-        switch (choice)
-        {
+        switch (choice) {
         case 1:
         {
             int patient_id;
             string name, dob, gender;
             cout << "Enter Patient ID: ";
             cin >> patient_id;
+            while (patientsLL.search(patient_id)) {
+                cout << "Patient ID " << patient_id << " already exists! Please enter a different ID." << endl;
+                cout << "Enter Patient ID: ";
+                cin >> patient_id;
+            }
             cin.ignore();
             cout << "Enter Name: ";
             getline(cin, name);
@@ -116,6 +106,11 @@ int main()
             string name, specialization;
             cout << "Enter Doctor ID: ";
             cin >> doctor_id;
+            while (doctorsLL.search(doctor_id)) {
+                cout << "Doctor ID " << doctor_id << " already exists! Please enter a different ID." << endl;
+                cout << "Enter Doctor ID: ";
+                cin >> doctor_id;
+            }
             cin.ignore();
             cout << "Enter Name: ";
             getline(cin, name);
@@ -130,6 +125,12 @@ int main()
             string appointment_date;
             cout << "Enter Appointment ID: ";
             cin >> appointment_id;
+            while (appointmentsLL.search(appointment_id)) {
+                cout << "Appointment ID " << appointment_id << " already exists! Please enter a different ID." << endl;
+                cout << "Enter Appointment ID: ";
+                cin >> appointment_id;
+            }
+            cin.ignore();
             cout << "Enter Patient ID: ";
             cin >> patient_id;
             cout << "Enter Doctor ID: ";
