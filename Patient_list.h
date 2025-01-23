@@ -5,7 +5,7 @@
 
 using namespace std;
 
-struct PatientNode {
+struct PatientNode {    
     Patient data;
     PatientNode* next;
 };

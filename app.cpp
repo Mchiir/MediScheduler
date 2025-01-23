@@ -2,6 +2,7 @@
 #include "Patient_list.h"
 #include "Doctor_list.h"
 #include "Appointment_list.h"
+#include "validation.h"
 
 using namespace std;
 
@@ -83,6 +84,8 @@ int main() {
         {
             int patient_id;
             string name, dob, gender;
+            cout<<"PATIENT REGISTRATION"<<endl;
+            cout<<"----------------------"<<endl;
             cout << "Enter Patient ID: ";
             cin >> patient_id;
             while (patientsLL.search(patient_id)) {
@@ -104,6 +107,8 @@ int main() {
         {
             int doctor_id;
             string name, specialization;
+            cout<<"DOCTOR REGISTRATION"<<endl;
+            cout<<"--------------------"<<endl;
             cout << "Enter Doctor ID: ";
             cin >> doctor_id;
             while (doctorsLL.search(doctor_id)) {
@@ -123,6 +128,8 @@ int main() {
         {
             int appointment_id, patient_id, doctor_id;
             string appointment_date;
+            cout<<"APPOINTMENT REGISTRATION"<<endl;
+            cout<<"------------------------"<<endl;
             cout << "Enter Appointment ID: ";
             cin >> appointment_id;
             while (appointmentsLL.search(appointment_id)) {
