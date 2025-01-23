@@ -9,8 +9,34 @@
 
 using namespace std;
 
-bool isValidID(int id) {
-    return id > 0;
+// Function to clear input stream in case of incorrect data entry
+void clearInput() {
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+}
+
+// Template function to get a valid ID
+template <typename T, typename LinkedList>
+T getId(T passed_id, const std::string &object, LinkedList &list) {
+    // Checking if 'passed_id' is a valid integer
+    while (true) {
+        if (!std::is_integral<T>::value) {
+            clearInput();
+            std::cout << "Invalid " << object << " ID type. Please enter a positive integer." << std::endl;
+        } else if (std::cin.fail() || passed_id <= 0) {
+            clearInput();
+            std::cout << "Invalid ID. Please enter a positive integer." << std::endl;
+        } else if (list.search(passed_id)) {
+            std::cout << object << " ID " << passed_id << " already exists! Please enter a different ID." << std::endl;
+        } else {
+            break;
+        }
+
+        std::cout << "Enter " << object << " ID: ";
+        std::cin >> passed_id;
+    }
+
+    return passed_id;
 }
 
 bool isValidString(const string &str) {
@@ -30,17 +56,17 @@ bool appointmentExists(AppointmentLinkedList &appointmentsLL, int appointment_id
 }
 
 bool isValidDate(string date) {
-    // Check if format is DD/MM/YYYY
+    // Check if format is YYYY-MM-DD
     if (date.length() != 10) return false;
-    if (date[2] != '/' || date[5] != '/') return false;
+    if (date[4] != '-' || date[7] != '-') return false;
     
     // Extract day, month, year
-    int day = stoi(date.substr(0, 2));
-    int month = stoi(date.substr(3, 2));
-    int year = stoi(date.substr(6, 4));
+    int year = stoi(date.substr(0, 4));
+    int month = stoi(date.substr(5, 2));
+    int day = stoi(date.substr(8, 2));
     
     // Basic validation
-    if (year < 1900 || year > 2024) return false;
+    if (year < 1900 || year > 2025) return false;
     if (month < 1 || month > 12) return false;
     if (day < 1 || day > 31) return false;
     
