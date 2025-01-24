@@ -58,7 +58,7 @@ template <typename T>
 T getStringParam(T passed_str, const std::string &object, const std::string &property) {
     while (true) {
         // Check if passed_str is a non-empty string with at least three alphabetic characters
-        if (!passed_str.empty() && std::all_of(passed_str.begin(), passed_str.end(), ::isalpha) && passed_str.size() >= 3) {
+        if (!passed_str.empty() && std::all_of(passed_str.begin(), passed_str.end(), [](char c) { return std::isalpha(c) || c == ' '; })) {
             // Check if the string length is less than or equal to 50 characters
             if (passed_str.size() <= 50) {
                 // If all validations pass, return the valid string
@@ -84,9 +84,6 @@ T getStringParam(T passed_str, const std::string &object, const std::string &pro
 // Function to validate gender
 std::string getGenderParam(std::string passed_gender, const std::string &object) {
     while (true) {
-        // Clear the input buffer
-        clearInput();
-
         // Convert the input to lowercase for case-insensitive comparison
         std::transform(passed_gender.begin(), passed_gender.end(), passed_gender.begin(), ::tolower);
 
