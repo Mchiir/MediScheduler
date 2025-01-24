@@ -181,13 +181,6 @@ bool checkUserExistence(int user_id, const std::string &object, LinkedList &list
 }
 
 
-// function to check for user existance in a linkedlist
-template <typename LinkedList>
-bool isUserExisting(std::string passed_gender, const std::string &object, LinkedList list){
-    
-}
-
-
 
 bool isValidString(const string &str) {
     return !str.empty();

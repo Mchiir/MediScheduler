@@ -77,22 +77,6 @@ void displayAppointments(AppointmentLinkedList &appointmentsLL)
     }
 }
 
-/*
-    int doctor_id;
-    string name;
-    string specialization;
-
-    int patient_id;
-    string name;
-    string dob;
-    string gender;
-
-    int appointment_id;
-    int patient_id;
-    int doctor_id;
-    string appointment_date;
-*/
-
 int main()
 {
     PatientLinkedList patientsLL;
