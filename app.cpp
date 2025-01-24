@@ -76,6 +76,7 @@ void displayAppointments(AppointmentLinkedList &appointmentsLL)
         appointmentsLL.display();
     }
 }
+
 /*
     int doctor_id;
     string name;
@@ -128,11 +129,20 @@ int main()
             cin.ignore();
 
             cout << "Enter Name: ";
-            getline(cin, name);
+            string passed_patient_str;
+            getline(cin, passed_patient_str);
+            name = getStringParam(passed_patient_str, "Patient", "name");
+
             cout << "Enter DOB (YYYY-MM-DD): ";
-            getline(cin, dob);
+            string patient_dob;
+            getline(cin, patient_dob);
+            dob = getDateParam(patient_dob, "Patient");
+
             cout << "Enter Gender: ";
-            getline(cin, gender);
+            string patient_gender;
+            getline(cin, patient_gender);
+            gender = getGenderParam(patient_gender, "Patient");
+
             registerPatient(patientsLL, patient_id, name, dob, gender);
             break;
         }
@@ -148,9 +158,15 @@ int main()
             cin.ignore();
 
             cout << "Enter Name: ";
-            getline(cin, name);
+            string passed_doctor_name;
+            getline(cin, passed_doctor_name);
+            name = getStringParam(passed_doctor_name, "Doctor", "name");
+            
             cout << "Enter Specialization: ";
-            getline(cin, specialization);
+            string passed_doctor_specialization;
+            getline(cin, passed_doctor_specialization);
+            specialization = getStringParam(passed_doctor_specialization, "Doctor", "Specialization");
+            
             registerDoctor(doctorsLL, doctor_id, name, specialization);
             break;
         }
@@ -164,14 +180,28 @@ int main()
             cin >> appointment_id;
             appointment_id = getId(appointment_id, "Appointment", appointmentsLL);
             cin.ignore();
-            
+
             cout << "Enter Patient ID: ";
             cin >> patient_id;
+            cin.ignore();
+
+            if (!checkUserExistence(patient_id, "Patient", patientsLL)) {
+                break;
+            }
+
             cout << "Enter Doctor ID: ";
             cin >> doctor_id;
             cin.ignore();
+
+            if (!checkUserExistence(doctor_id, "Doctor", doctorsLL)) {
+                break;
+            }
+
             cout << "Enter Appointment Date (YYYY-MM-DD): ";
-            getline(cin, appointment_date);
+            string appoint_date;
+            getline(cin, appoint_date);
+            appointment_date = getDateParam(appoint_date, "Appointment");
+
             registerAppointment(appointmentsLL, patientsLL, doctorsLL, appointment_id, patient_id, doctor_id, appointment_date);
             break;
         }
