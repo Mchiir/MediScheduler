@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cmath> // to work with log10
 #include <limits>
+#include <cctype>
 #include <regex>
 #include <ctime> // to access current time data
 #include "Patient_list.h"
@@ -26,6 +27,44 @@ int getCurrentYear() {
     std::tm* now = std::localtime(&t); // Convert to local time
     return now->tm_year + 1900; // Extract the year
 }
+
+// reusable validation function for strings
+int getCleanChoice(const std::string& input) {
+    // Remove leading and trailing whitespaces (if any)
+    std::string trimmed_input = input;
+    trimmed_input.erase(0, trimmed_input.find_first_not_of(" \t"));
+    trimmed_input.erase(trimmed_input.find_last_not_of(" \t") + 1);
+
+    // Check if input is empty
+    if (trimmed_input.empty()) {
+        std::cout << "Invalid input: Input cannot be empty." << std::endl;
+        return -1; // Invalid input
+    }
+
+    // Check if the input is numeric
+    bool isNumeric = std::all_of(trimmed_input.begin(), trimmed_input.end(), ::isdigit);
+    
+    if (isNumeric) {
+        int number = std::stoi(trimmed_input);  // Convert string to integer
+
+        // Check if the number is within the valid range
+        if (number > 0 && number <= 99) {
+            return number;  // Return the valid choice
+        } else {
+            std::cout << "Error: The input must be a positive integer between 1 and 99." << std::endl;
+            return -1; // Invalid input
+        }
+    } else {
+        // Check for negative numbers explicitly
+        if (trimmed_input.find('-') != std::string::npos) {
+            std::cout << "Invalid input: Negative numbers are not allowed." << std::endl;
+        } else {
+            std::cout << "Invalid input: Only numbers are allowed." << std::endl;
+        }
+        return -1; // Invalid input
+    }
+}
+
 
 // Template function to get a valid ID
 template <typename T, typename LinkedList>

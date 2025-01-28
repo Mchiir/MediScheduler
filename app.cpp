@@ -86,6 +86,7 @@ int main()
     cout << "Welcome to MediScheduler.\n"
          << endl;
 
+    std::string input;
     int choice;
     do
     {
@@ -96,8 +97,14 @@ int main()
         cout << "5. Display Doctors" << endl;
         cout << "6. Display Appointments" << endl;
         cout << "7. Exit" << endl;
-        cout << "Enter choice: ";
-        cin >> choice;
+
+        std::cout << "Enter choice: ";
+        std::getline(std::cin, input);
+        choice = getCleanChoice(input);
+
+        if(choice == -1){
+            continue; // invalid input, show the menu and prompt again
+        }
 
         switch (choice)
         {
